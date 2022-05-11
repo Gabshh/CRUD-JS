@@ -41,7 +41,8 @@ const saveClient = async () => {
         'nome':    document.getElementById('nome').value,
         'email':   document.getElementById('email').value,
         'celular': document.getElementById('celular').value,
-        'cidade':  document.getElementById('cidade').value
+        'cidade':  document.getElementById('cidade').value,
+        'foto': document.getElementById('modal-image').src
     }    
     
     if(form.reportValidity()) {
@@ -65,6 +66,7 @@ const fillForm = (client) => {
     document.getElementById('celular').value = client.celular
     document.getElementById('cidade').value = client.cidade
     document.getElementById('nome').dataset.id = client.id
+    document.getElementById('modal-image').src = client.foto
 }
 
 globalThis.editClient = async (id) => {
