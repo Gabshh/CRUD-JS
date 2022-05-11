@@ -32,6 +32,9 @@ const updateTable = async () => {
 const isEdit = () => document.getElementById('nome').hasAttribute('data-id')
 
 const saveClient = async () => {
+    
+    const form = document.getElementById('modal-form')
+
     // Criar um json com as informações do cliente
     const client = {
         'id':      '',
@@ -41,16 +44,19 @@ const saveClient = async () => {
         'cidade':  document.getElementById('cidade').value
     }    
     
-    if(isEdit()) {
-        client.id = document.getElementById('nome').dataset.id
-        await updateClient(client)
-    } else {
-        await createClient(client)
+    if(form.reportValidity()) {
+
+        if(isEdit()) {
+            client.id = document.getElementById('nome').dataset.id
+            await updateClient(client)
+        } else {
+            await createClient(client)
+        }
+        
+        closeModal()
+        
+        await updateTable()
     }
-    
-    closeModal()
-    
-    await updateTable()
 }
 
 const fillForm = (client) => {
@@ -98,8 +104,24 @@ globalThis.delClient = async (id) => {
 
 updateTable()
 
+const maskCelular = ({target}) => {
+
+    let text = target.value
+
+    text = text.replace(/[^0-9]/g,'')
+    text = text.replace(/(.{2})(.{5})(.{4})/, '($1) $2-$3')
+    text = text.replace(/(.{15})(.*)/, '$1')
+    // text = text.replace(/(.{7})(.)/,'$1-$2')
+
+    target.value = text
+
+}
+
+updateTable()
 
 // Eventos
 document.getElementById('cadastrarCliente').addEventListener('click', openModal)
 document.getElementById('salvar').addEventListener('click', saveClient)
+
+document.getElementById('celular').addEventListener('keyup', maskCelular)
 //document.getElementById('data-container').addEventListener('click', actionData )
