@@ -8,6 +8,7 @@ const closeModal = () => {
     document.getElementById('modal').classList.remove('active')
     document.getElementById('modal-form').reset()
     document.getElementById('nome').removeAttribute('data-id')
+    document.getElementById('modal-image').src = '../img/add.png'
 }
 
 const loadImage = () => imagePreview('modal-image-input', 'modal-image')
